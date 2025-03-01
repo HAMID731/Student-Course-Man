@@ -1,0 +1,44 @@
+student 
+login : email(unique, findEmail), password
+register: email, password, name
+view notification( if there is assignment) 
+students should be able view course and also register for courses
+
+
+teacher
+login
+register
+teachers should have a constant password(uniqueId) that differentiate them from students
+teachers should be able to register courses and also give assignment 
+teachers should be able to view enrolled students 
+teachers should have a calculate grade method where CA1 and CA2 then exam is calculated 
+70 - 100 = A
+69 - 60 = B
+59 - 50 = C
+49 - 40 = D
+39 - 35 = E
+34 - 0 = Fail, the student would have to take the course again
+
+grade class 
+CA1
+CA2
+EXAM
+scores
+
+course:
+code 
+enrolled students
+list of grades
+name
+
+assessment class 
+conduct test
+conduct exam 
+scores
+
+
+main method 
+register: role(student or teacher), email, password, teacherUniqueId
+login: student -> display courses
+	teacher -> create, assign grades, view enrolled students 
+
