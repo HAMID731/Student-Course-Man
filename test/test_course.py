@@ -1,7 +1,7 @@
 import unittest
 
 from exceptions.exception import InvalidCourseCodeException, InvalidCourseTitleException, \
-    StudentAlreadyEnrolledException
+    StudentAlreadyEnrolledException, NullException
 from src.course import Course
 
 
@@ -47,4 +47,22 @@ class MyCourseTestCase(unittest.TestCase):
         self.assertEqual(course.number_of_enrolled_students(), 1)
         course.remove_student("Hamid")
         self.assertEqual(course.number_of_enrolled_students(), 0)
+
+    def test_number_of_students_enrolled_in_the_course(self):
+        course = Course("201", "English")
+        self.assertEqual(course.number_of_enrolled_students(), 0)
+        course.add_student("Hamid")
+        self.assertEqual(course.number_of_enrolled_students(), 1)
+        course.add_student("Favour")
+        self.assertEqual(course.number_of_enrolled_students(), 2)
+        course.add_student("Bibi")
+        self.assertEqual(course.number_of_enrolled_students(), 3)
+
+    def test_that_empty_course_code_raises_null_exception(self):
+        with self.assertRaises(NullException):
+            course = Course("", "English")
+
+    def test_that_empty_course_title_raises_null_exception(self):
+        with self.assertRaises(NullException):
+            course = Course("201", "")
 

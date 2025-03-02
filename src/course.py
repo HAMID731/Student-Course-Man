@@ -1,5 +1,5 @@
 from exceptions.exception import InvalidCourseCodeException, InvalidCourseTitleException, \
-    StudentAlreadyEnrolledException, CourseAlreadyRegisteredException
+    StudentAlreadyEnrolledException, CourseAlreadyRegisteredException, NullException
 
 
 class Course:
@@ -34,12 +34,16 @@ class Course:
 
     @staticmethod
     def validate_course_code(course_code) -> bool:
+        if not course_code:
+            raise NullException("Course Code is required")
         if not isinstance(course_code, str) or len(course_code) != 3 or not course_code.isdigit():
             raise InvalidCourseCodeException("Course code must be a 3-digit number")
         return True
 
     @staticmethod
     def validate_title(title) -> bool:
+        if not title:
+            raise NullException("Fill the title field")
         if not isinstance(title, str) or not title.isalpha():
             raise InvalidCourseTitleException("title is not valid")
         return True
