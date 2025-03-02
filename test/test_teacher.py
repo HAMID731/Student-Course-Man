@@ -1,13 +1,14 @@
 import unittest
 
-from exceptions.exception import NullException, InvalidNameException, InvalidNameLengthException
+from exceptions.exception import NullException, InvalidNameException, InvalidNameLengthException, \
+    InvalidEmailPatternException, InvalidPasswordLengthException
 from src.teacher import Teacher
 
 
 class MyTeacherTestCase(unittest.TestCase):
 
     def setUp(self):
-        self.teacher = Teacher("Firstname lastName", "email@gmail.com", "pass")
+        self.teacher = Teacher("Firstname lastName", "email@gmail.com", "passw")
 
     def test_that_two_teachers_can_register_with_valid_details(self):
         self.teacher.register_teacher("Dr Favour", "FavourIgwe@gmail.com", "password")
@@ -26,3 +27,19 @@ class MyTeacherTestCase(unittest.TestCase):
     def test_that_a_teacher_cannot_register_with_first_name_or_last_name_only_name_field(self):
         with self.assertRaises(InvalidNameLengthException):
             self.teacher.register_teacher("Dr", "FavourIgwe@gmail.com", "password")
+
+    def test_that_a_teacher_cannot_register_with_empty_email_field(self):
+        with self.assertRaises(NullException):
+            self.teacher.register_teacher("Dr Favour", "", "password")
+
+    def test_that_a_teacher_cannot_register_with_empty_password_field(self):
+        with self.assertRaises(NullException and InvalidPasswordLengthException):
+            self.teacher.register_teacher("Dr Favour", "FavourIgwe@gmail.com", "")
+
+    def test_that_a_teacher_cannot_register_with_invalid_email_pattern(self):
+        with self.assertRaises(InvalidEmailPatternException):
+            self.teacher.register_teacher("Dr Favour", "@FavourIgwe@gmail.com", "password")
+
+    def test_that_a_teacher_cannot_register_with_incomplete_password_length(self):
+        with self.assertRaises(InvalidPasswordLengthException):
+            self.teacher.register_teacher("Dr Favour", "@FavourIgwe@gmail.com", "pass")

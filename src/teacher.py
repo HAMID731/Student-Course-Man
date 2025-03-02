@@ -54,9 +54,9 @@ class Teacher:
     def validate_email(email):
         if not email or not email.strip():
             raise NullException("Fields cannot be empty.")
-        email_pattern = r'[A-Z][a-z][0-9][-._]+@[a-z][A-Z][0-9][-._]+\.[a-z][0-9][-._]+'
+        email_pattern = r'[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+'
 
-        if re.match(email_pattern, email):
+        if not re.match(email_pattern, email):
             raise InvalidEmailPatternException("Invalid email address.")
 
     @staticmethod
