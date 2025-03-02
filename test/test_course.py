@@ -40,3 +40,11 @@ class MyCourseTestCase(unittest.TestCase):
         with self.assertRaises(StudentAlreadyEnrolledException):
             course.add_student("Favour")
 
+    def test_that_course_can_be_removed_by_students(self):
+        course = Course("201", "English")
+        self.assertEqual(course.number_of_enrolled_students(), 0)
+        course.add_student("Hamid")
+        self.assertEqual(course.number_of_enrolled_students(), 1)
+        course.remove_student("Hamid")
+        self.assertEqual(course.number_of_enrolled_students(), 0)
+

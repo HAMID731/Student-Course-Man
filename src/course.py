@@ -50,7 +50,7 @@ class Course:
         self.enrolled_students.append(student)
 
     def remove_student(self, student):
-        if student in self.__enrolled_students:
+        if not student in self.__enrolled_students:
             raise CourseAlreadyRegisteredException("Course is already registered")
         self.enrolled_students.remove(student)
 
