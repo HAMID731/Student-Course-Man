@@ -42,4 +42,13 @@ class MyTeacherTestCase(unittest.TestCase):
 
     def test_that_a_teacher_cannot_register_with_incomplete_password_length(self):
         with self.assertRaises(InvalidPasswordLengthException):
-            self.teacher.register_teacher("Dr Favour", "@FavourIgwe@gmail.com", "pass")
+            self.teacher.register_teacher("Dr Favour", "FavourIgwe@gmail.com", "pass")
+
+    def test_that_teacher_login_with_correct_details(self):
+        self.teacher.register_teacher("Dr Favour", "FavourIgwe@gmail.com", "password")
+        login = self.teacher.login("FavourIgwe@gmail.com", "password")
+        self.assertTrue(login)
+
+
+    def test_that_a_teacher_can_create_course(self):
+        self.teacher.create_course("201", "English")

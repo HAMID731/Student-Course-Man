@@ -88,16 +88,15 @@ class Teacher:
         details = name, email, password
         self.teachers.append(details)
 
-
     def create_course(self, course_code: str, course_title: str):
         if self.__logged_in == False:
             raise VerificationFailedException("You are not logged in.")
         course = Course(course_code, course_title)
         self.courses.append(course)
 
-    def login(self, name: str, password: str):
+    def login(self, email: str, password: str) -> bool:
         for details in self.teachers:
-            if details.name == name and details.password == password:
+            if details.email == email and details.password == password:
                 return True
 
         raise InvalidDetailsException("Invalid details.")
