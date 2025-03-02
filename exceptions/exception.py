@@ -47,3 +47,13 @@ class InvalidNameException(Exception):
     def __init__(self, message):
         self.message = message
         super().__init__(self.message)
+
+class InvalidDetailsException(Exception):
+    def __init__(self, message):
+        self.message = message
+        super().__init__(self.message)
+
+class VerificationFailedException(Exception):
+    def __init__(self, message):
+        self.message = message
+        super().__init__(self.message)

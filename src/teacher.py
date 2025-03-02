@@ -1,10 +1,10 @@
 import string
 
-import bcrypt
 import re
 
 from exceptions.exception import NullException, InvalidPasswordLengthException, InvalidEmailPatternException, \
-    InvalidNameLengthException, InvalidNameException
+    InvalidNameLengthException, InvalidNameException, InvalidDetailsException, VerificationFailedException
+from src.course import Course
 
 
 class Teacher:
@@ -15,6 +15,8 @@ class Teacher:
         self.__name = name
         self.students = []
         self.courses = []
+        self.teachers = []
+        self.__logged_in = False
 
 
     @property
@@ -44,9 +46,9 @@ class Teacher:
 
     TEACHER_DETAILS = 'user_details.txt'
 
-    @staticmethod
-    def hash_password(password):
-        return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    # @staticmethod
+    # def hash_password(password):
+    #     return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
     @staticmethod
     def validate_email(email):
@@ -76,13 +78,36 @@ class Teacher:
         if len(password) < 5:
             raise InvalidPasswordLengthException("Password must be at least 5 characters.")
 
-        return bcrypt.checkpw(password.encode('utf-8'), bcrypt.gensalt())
+        # return bcrypt.checkpw(password.encode('utf-8'), bcrypt.gensalt())
 
 
     def register_teacher(self, name: str, email: str, password:str):
         self.validate_email(email)
         self.validate_name(name)
         self.validate_password(password)
+        details = name, email, password
+        self.teachers.append(details)
+
+
+    def create_course(self, course_code: str, course_title: str):
+        if self.__logged_in == False:
+            raise VerificationFailedException("You are not logged in.")
+        course = Course(course_code, course_title)
+        self.courses.append(course)
+        self.__logged_in = True
+
+    def login(self, name: str, password: str):
+        for details in self.teachers:
+            if details.name == name and details.password == password:
+                return True
+
+        raise InvalidDetailsException("Invalid details.")
+
+
+
+
+
+
 
 
 
