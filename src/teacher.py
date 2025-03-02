@@ -1,3 +1,11 @@
+import string
+
+import bcrypt
+import re
+
+from exceptions.exception import NullException, InvalidPasswordLengthException, InvalidEmailPatternException, \
+    InvalidNameLengthException, InvalidNameException
+
 
 class Teacher:
 
@@ -36,7 +44,46 @@ class Teacher:
 
     TEACHER_DETAILS = 'user_details.txt'
 
-    def hash_password(self, password):
-        return bcrypt.hashpw
+    @staticmethod
+    def hash_password(password):
+        return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+
+    @staticmethod
+    def validate_email(email):
+        if not email or not email.strip():
+            raise NullException("Fields cannot be empty.")
+        email_pattern = r'[A-Z][a-z][0-9][-._]+@[a-z][A-Z][0-9][-._]+\.[a-z][0-9][-._]+'
+
+        if re.match(email_pattern, email):
+            raise InvalidEmailPatternException("Invalid email address.")
+
+    @staticmethod
+    def validate_name(name):
+        if not name:
+            raise NullException("Fields cannot be empty.")
+
+        names = name.split(' ')
+
+        if len(names) < 2:
+            raise InvalidNameLengthException("First name and last name is required.")
+
+        for every_char in names:
+            if every_char not in string.ascii_letters:
+                raise InvalidNameException("Name must contain only alphabetic character.")
+
+    @staticmethod
+    def validate_password(password):
+        if len(password) < 5:
+            raise InvalidPasswordLengthException("Password must be at least 5 characters.")
+
+        return bcrypt.checkpw(password.encode('utf-8'), bcrypt.gensalt())
+
+
+    def register_teacher(self, name: str, email: str, password:str):
+        self.validate_email(email)
+        self.validate_name(name)
+        self.validate_password(password)
+
+
 
 
