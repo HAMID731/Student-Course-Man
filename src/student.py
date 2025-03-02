@@ -15,3 +15,4 @@ class Student(Teacher):
     @admin_password.setter
     def admin_password(self, password):
         self.__admin_password = password
+

@@ -34,7 +34,7 @@ class Course:
         self.__title = title
 
     @staticmethod
-    def validate_course_code(course_code) -> bool:
+    def validate_course_code(course_code: str) -> bool:
         if not course_code:
             raise NullException("Course Code is required")
         if not isinstance(course_code, str) or len(course_code) != 3 or not course_code.isdigit():
