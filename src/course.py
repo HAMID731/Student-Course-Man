@@ -4,8 +4,9 @@ from exceptions.exception import InvalidCourseCodeException, InvalidCourseTitleE
 
 class Course:
 
-    def __init__(self, course_code: int, title: str):
+    def __init__(self, course_code: str, title: str):
         self.validate_course_code(course_code)
+        self.validate_title(title)
         self.__course_code = course_code
         self.__title = title
         self.enrolled_students = []
@@ -29,13 +30,13 @@ class Course:
 
     @staticmethod
     def validate_course_code(course_code) -> bool:
-        if not isinstance(course_code, int):
-            raise InvalidCourseCodeException("course code is not valid")
+        if not isinstance(course_code, str) or len(course_code) != 3 or not course_code.isdigit():
+            raise InvalidCourseCodeException("Course code must be a 3-digit number")
         return True
 
     @staticmethod
     def validate_title(title) -> bool:
-        if not isinstance(title, str):
+        if not isinstance(title, str) or not title.isalpha():
             raise InvalidCourseTitleException("title is not valid")
         return True
 
