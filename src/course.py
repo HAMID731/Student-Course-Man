@@ -1,6 +1,7 @@
 from exceptions.exception import InvalidCourseCodeException, InvalidCourseTitleException, \
     StudentAlreadyEnrolledException, CourseAlreadyRegisteredException, NullException
 
+import pickle
 
 class Course:
 
@@ -67,5 +68,15 @@ class Course:
 
 
 
-
+# def save_course_data(course, filename:str="course.pickle"):
+#     with open(filename, "wb") as file:
+#         pickle.dump(course, file)
+#
+# def load_course_data(filename="course.pickle"):
+#     with open(filename, "rb") as file:
+#         course = pickle.load(file)
+#
+# course = Course("291", "yoruba")
+# save_course_data(course)
+# load_course_data(filename="course.pickle")
 
