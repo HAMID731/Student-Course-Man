@@ -9,7 +9,7 @@ class Course:
         self.validate_title(title)
         self.__course_code = course_code
         self.__title = title
-        self.enrolled_students = []
+        self.__enrolled_students = []
 
 
     @property
@@ -23,6 +23,10 @@ class Course:
     @property
     def title(self):
         return self.__title
+
+    @property
+    def enrolled_students(self):
+        return self.__enrolled_students
 
     @title.setter
     def title(self, title):
@@ -40,18 +44,18 @@ class Course:
             raise InvalidCourseTitleException("title is not valid")
         return True
 
-    def add_student(self, student):
-        if student in self.enrolled_students:
+    def add_student(self, student: str):
+        if student in self.__enrolled_students:
             raise StudentAlreadyEnrolledException("Student is already enrolled in this course")
         self.enrolled_students.append(student)
 
     def remove_student(self, student):
-        if student in self.enrolled_students:
+        if student in self.__enrolled_students:
             raise CourseAlreadyRegisteredException("Course is already registered")
         self.enrolled_students.remove(student)
 
     def number_of_enrolled_students(self):
-        return len(self.enrolled_students)
+        return len(self.__enrolled_students)
 
     def __repr__(self):
         return (f"Course = {self.course_code}, "
