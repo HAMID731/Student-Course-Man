@@ -9,7 +9,7 @@ from src.course import Course
 
 class Teacher:
 
-    def __init__(self, email, password, name):
+    def __init__(self, name, email, password):
         self.__email = email
         self.__password = password
         self.__name = name
@@ -70,7 +70,7 @@ class Teacher:
             raise InvalidNameLengthException("First name and last name is required.")
 
         for every_char in names:
-            if every_char not in string.ascii_letters:
+            if not every_char.isalpha():
                 raise InvalidNameException("Name must contain only alphabetic character.")
 
     @staticmethod
@@ -94,7 +94,6 @@ class Teacher:
             raise VerificationFailedException("You are not logged in.")
         course = Course(course_code, course_title)
         self.courses.append(course)
-        self.__logged_in = True
 
     def login(self, name: str, password: str):
         for details in self.teachers:
@@ -102,6 +101,19 @@ class Teacher:
                 return True
 
         raise InvalidDetailsException("Invalid details.")
+
+    def check_amount_of_students_enrolled(self) -> int:
+        for check in self.courses:
+            if check.enrolled_students:
+                return len(check.enrolled_students)
+
+        raise NullException("No enrolled students.")
+
+    def number_of_courses_created(self) -> int:
+        return len(self.courses)
+
+    def number_of_teachers(self) -> int:
+        return len(self.teachers)
 
 
 
