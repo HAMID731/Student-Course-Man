@@ -11,7 +11,7 @@ class MyTeacherTestCase(unittest.TestCase):
         self.teacher = Teacher("Firstname lastName", "email@gmail.com", "passw")
 
     def test_that_two_teachers_can_register_with_valid_details(self):
-        self.teacher.register_teacher("Dr Favour", "FavourIgwe@gmail.com", "password")
+        self.teacher.register_teacher("Dr Favour", "FavourIgwe12@gmail.com", "password")
         self.assertEqual(1, self.teacher.number_of_teachers())
         self.teacher.register_teacher("Dr Hamid", "HamidAbari@gmail.com", "password1")
         self.assertEqual(2, self.teacher.number_of_teachers())
@@ -49,6 +49,13 @@ class MyTeacherTestCase(unittest.TestCase):
         login = self.teacher.login("FavourIgwe@gmail.com", "password")
         self.assertTrue(login)
 
-
     def test_that_a_teacher_can_create_course(self):
+        self.teacher.register_teacher("Dr Favour", "FavourIgwe@gmail.com", "password")
+        self.assertFalse(self.teacher.login_status())
+        login = self.teacher.login("FavourIgwe@gmail.com", "password")
+        self.assertTrue(login)
         self.teacher.create_course("201", "English")
+        self.assertEqual(1, self.teacher.number_of_courses_created())
+        self.teacher.create_course("202", "Maths")
+        self.assertEqual(2, self.teacher.number_of_courses_created())
+

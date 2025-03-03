@@ -19,6 +19,9 @@ class Teacher:
         self.__logged_in = False
 
 
+    def login_status(self):
+        return self.__logged_in
+
     @property
     def email(self):
         return self.__email
@@ -93,10 +96,14 @@ class Teacher:
             raise VerificationFailedException("You are not logged in.")
         course = Course(course_code, course_title)
         self.courses.append(course)
+        # self.__logged_in = True
 
     def login(self, email: str, password: str) -> bool:
-        for details in self.teachers:
-            if details.email == email and details.password == password:
+        self.validate_email(email)
+        self.validate_password(password)
+        for each_detail in self.teachers:
+            if each_detail[1] == email and each_detail[2] == password:
+                self.__logged_in = True
                 return True
 
         raise InvalidDetailsException("Invalid details.")
@@ -113,6 +120,7 @@ class Teacher:
 
     def number_of_teachers(self) -> int:
         return len(self.teachers)
+
 
 
 
